@@ -46,6 +46,19 @@ namespace pet_hotel.Controllers
             return Ok(pet);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteById(int id) {
+            Pet pet = _context.Pets.Include(p => p.PetOwnedBy).SingleOrDefault(p => p.id == id);
+            if (pet == null) {
+                return NotFound();
+            }
+            _context.Pets.Remove(pet);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+
 
         // [HttpGet]
         // [Route("test")]
