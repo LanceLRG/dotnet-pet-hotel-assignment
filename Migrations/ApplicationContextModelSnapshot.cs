@@ -26,9 +26,6 @@ namespace dotnet_bakery.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("Myproperty")
-                        .HasColumnType("integer");
-
                     b.Property<int>("breed")
                         .HasColumnType("integer");
 
@@ -36,6 +33,9 @@ namespace dotnet_bakery.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("color")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("name")
                         .HasColumnType("integer");
 
                     b.Property<int>("petOwnerid")

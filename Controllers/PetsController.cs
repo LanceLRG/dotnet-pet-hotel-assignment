@@ -19,6 +19,34 @@ namespace pet_hotel.Controllers
             _context = context;
         }
 
+        [HttpPost]
+        public IActionResult MakePet([FromBody] Pet pet){
+            PetOwner petOwner = _context.PetOwners.Find(pet.petOwnerid);
+            if (petOwner == null) {
+                ModelState.AddModelError("petOwnerid", "Invalid Owner ID");
+                return ValidationProblem(ModelState);
+            }
+
+            _context.Add(pet);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new {id = pet.id}, pet);
+        }
+
+        [HttpGet]
+        public IEnumerable<Pet> GetPets() {
+            return _context.Pets.Include(p => p.PetOwnedBy).OrderBy(p => p.name);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) {
+            Pet pet = _context.Pets.Include(p => p.PetOwnedBy).SingleOrDefault(p => p.id == id);
+            if (pet == null) {
+                return NotFound();
+            }
+            return Ok(pet);
+        }
+
+
         // [HttpGet]
         // [Route("test")]
         // public IEnumerable<Pet> GetPets() {

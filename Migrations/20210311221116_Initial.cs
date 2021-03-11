@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace dotnet_bakery.Migrations
 {
-    public partial class initialsetup : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace dotnet_bakery.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Myproperty = table.Column<int>(nullable: false),
+                    name = table.Column<int>(nullable: false),
                     breed = table.Column<int>(nullable: false),
                     color = table.Column<int>(nullable: false),
                     checkedInAt = table.Column<DateTime>(nullable: true),
