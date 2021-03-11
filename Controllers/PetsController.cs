@@ -34,12 +34,12 @@ namespace pet_hotel.Controllers
 
         [HttpGet]
         public IEnumerable<Pet> GetPets() {
-            return _context.Pets.Include(p => p.PetOwnedBy).OrderBy(p => p.name);
+            return _context.Pets.Include(p => p.PetOwner).OrderBy(p => p.name);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id) {
-            Pet pet = _context.Pets.Include(p => p.PetOwnedBy).SingleOrDefault(p => p.id == id);
+            Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
             if (pet == null) {
                 return NotFound();
             }
@@ -48,7 +48,7 @@ namespace pet_hotel.Controllers
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id) {
-            Pet pet = _context.Pets.Include(p => p.PetOwnedBy).SingleOrDefault(p => p.id == id);
+            Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
             if (pet == null) {
                 return NotFound();
             }
@@ -58,7 +58,29 @@ namespace pet_hotel.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/checkin")]
+        public IActionResult CheckinById(int id) {
+            Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
+            if (pet == null) {
+                return NotFound();
+            }
+            pet.checkin();
+            _context.Update(pet);
+            _context.SaveChanges();
+            return Ok(pet);
+        }
 
+        [HttpPut("{id}/checkout")]
+        public IActionResult CheckoutById(int id) {
+            Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
+            if (pet == null) {
+                return NotFound();
+            }
+            pet.checkout();
+            _context.Update(pet);
+            _context.SaveChanges();
+            return Ok(pet);
+        }
 
         // [HttpGet]
         // [Route("test")]

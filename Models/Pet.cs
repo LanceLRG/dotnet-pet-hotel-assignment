@@ -31,7 +31,7 @@ namespace pet_hotel
         public int id { get; set; }
 
         [Required]
-        public int name { get; set; }
+        public string name { get; set; }
 
         [Required]
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -44,11 +44,17 @@ namespace pet_hotel
 
         public DateTime? checkedInAt { get; set; }
 
-        public PetOwner PetOwnedBy { get; set; }
+        public PetOwner PetOwner { get; set; }
         [Required]
-        [ForeignKey("PetOwner")]
+        [ForeignKey("PetOwners")]
         public int petOwnerid { get; set; }
 
+        public void checkin() {
+            this.checkedInAt = DateTime.Now;
+        }
 
+        public void checkout() {
+            this.checkedInAt = null;
+        }
     }
 }

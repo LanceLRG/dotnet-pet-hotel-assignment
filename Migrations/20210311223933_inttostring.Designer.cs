@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using pet_hotel.Models;
@@ -9,9 +10,10 @@ using pet_hotel.Models;
 namespace dotnet_bakery.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210311223933_inttostring")]
+    partial class inttostring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +73,7 @@ namespace dotnet_bakery.Migrations
 
             modelBuilder.Entity("pet_hotel.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.PetOwner", "PetOwner")
+                    b.HasOne("pet_hotel.PetOwner", "PetOwnedBy")
                         .WithMany("pets")
                         .HasForeignKey("petOwnerid")
                         .OnDelete(DeleteBehavior.Cascade)
