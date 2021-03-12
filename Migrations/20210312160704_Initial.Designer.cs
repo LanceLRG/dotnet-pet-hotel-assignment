@@ -10,8 +10,8 @@ using pet_hotel.Models;
 namespace dotnet_bakery.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210311223933_inttostring")]
-    partial class inttostring
+    [Migration("20210312160704_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,7 +73,7 @@ namespace dotnet_bakery.Migrations
 
             modelBuilder.Entity("pet_hotel.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.PetOwner", "PetOwnedBy")
+                    b.HasOne("pet_hotel.PetOwner", "PetOwner")
                         .WithMany("pets")
                         .HasForeignKey("petOwnerid")
                         .OnDelete(DeleteBehavior.Cascade)

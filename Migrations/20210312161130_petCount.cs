@@ -2,7 +2,7 @@
 
 namespace dotnet_bakery.Migrations
 {
-    public partial class petownerchange : Migration
+    public partial class petCount : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

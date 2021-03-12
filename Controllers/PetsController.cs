@@ -15,41 +15,49 @@ namespace pet_hotel.Controllers
     public class PetsController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        public PetsController(ApplicationContext context) {
+        public PetsController(ApplicationContext context)
+        {
             _context = context;
         }
 
         [HttpPost]
-        public IActionResult MakePet([FromBody] Pet pet){
+        public IActionResult MakePet([FromBody] Pet pet)
+        {
             PetOwner petOwner = _context.PetOwners.Find(pet.petOwnerid);
-            if (petOwner == null) {
+            if (petOwner == null)
+            {
                 ModelState.AddModelError("petOwnerid", "Invalid Owner ID");
                 return ValidationProblem(ModelState);
             }
 
             _context.Add(pet);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new {id = pet.id}, pet);
+            return CreatedAtAction(nameof(GetById), new { id = pet.id }, pet);
         }
 
         [HttpGet]
-        public IEnumerable<Pet> GetPets() {
+        public IEnumerable<Pet> GetPets()
+        {
             return _context.Pets.Include(p => p.PetOwner).OrderBy(p => p.name);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) {
+        public IActionResult GetById(int id)
+        {
             Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
-            if (pet == null) {
+            if (pet == null)
+            {
                 return NotFound();
             }
             return Ok(pet);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteById(int id) {
+        public IActionResult DeleteById(int id)
+        {
             Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
-            if (pet == null) {
+            if (pet == null)
+            {
                 return NotFound();
             }
             _context.Pets.Remove(pet);
@@ -59,9 +67,11 @@ namespace pet_hotel.Controllers
         }
 
         [HttpPut("{id}/checkin")]
-        public IActionResult CheckinById(int id) {
+        public IActionResult CheckinById(int id)
+        {
             Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
-            if (pet == null) {
+            if (pet == null)
+            {
                 return NotFound();
             }
             pet.checkin();
@@ -70,10 +80,21 @@ namespace pet_hotel.Controllers
             return Ok(pet);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult updatePet(int id, [FromBody] Pet pet)
+        {
+            if (!_context.Pets.Any(p => pet.id == id)) return NotFound();
+            _context.Pets.Update(pet);
+            _context.SaveChanges();
+            return Ok(pet);
+        }
+
         [HttpPut("{id}/checkout")]
-        public IActionResult CheckoutById(int id) {
+        public IActionResult CheckoutById(int id)
+        {
             Pet pet = _context.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.id == id);
-            if (pet == null) {
+            if (pet == null)
+            {
                 return NotFound();
             }
             pet.checkout();

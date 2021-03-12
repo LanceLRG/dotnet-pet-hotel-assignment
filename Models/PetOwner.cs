@@ -20,7 +20,7 @@ namespace pet_hotel
         [JsonIgnore]
         public List<Pet> pets { get; set; }
         [NotMapped]
-        public int petcount
+        public int petCount
         {
             get
             {

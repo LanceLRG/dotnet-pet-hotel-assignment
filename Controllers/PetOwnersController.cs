@@ -57,7 +57,7 @@ namespace pet_hotel.Controllers
             if (!_context.PetOwners.Any(p => petOwner.id == id)) return NotFound();
             _context.PetOwners.Update(petOwner);
             _context.SaveChanges();
-            return NoContent();
+            return Ok(petOwner);
         }
 
     }
