@@ -53,7 +53,7 @@ namespace pet_hotel.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult updateBaker(int id, [FromBody] PetOwner petOwner) {
+        public IActionResult updatePetOwner(int id, [FromBody] PetOwner petOwner) {
             if (!_context.PetOwners.Any(p => petOwner.id == id)) return NotFound();
             _context.PetOwners.Update(petOwner);
             _context.SaveChanges();
